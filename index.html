@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="ja" style="background:#04040e;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="ロト7・ロト6の無料番号予測ツール。統計データ・ホット数字・奇偶バランスを考慮した高精度な番号生成。キャリーオーバー情報もリアルタイム表示。">
+<meta name="keywords" content="ロト7,ロト6,宝くじ,番号予測,当選番号,キャリーオーバー,統計,ダブル7倍数ブリッジ法">
+<title>LOTO LAB | ロト7・ロト6 無料予測ツール</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#04040e;--bg2:#09091c;--bg3:#0f0f26;
+  --gold:#c9a84c;--gold2:#e8c96a;--gold3:#fff4c0;
+  --blue:#6ab4ff;--blue2:#a0d0ff;
+  --green:#5eddd4;
+  --muted:#9090b8;--text:#e0e0f4;
+  --border:rgba(255,255,255,0.09);
+}
+html{scroll-behavior:smooth;}
+body{background:#04040e!important;color:#e0e0f4!important;font-family:'Noto Sans JP',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%;}
+
+/* BG */
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.bg-fx::before{
+content:’’;position:absolute;inset:0;
+background:
+radial-gradient(ellipse 80% 60% at 15% 20%,rgba(201,168,76,0.09) 0%,transparent 60%),
+radial-gradient(ellipse 70% 50% at 85% 75%,rgba(74,158,255,0.07) 0%,transparent 60%),
+radial-gradient(ellipse 50% 40% at 50% 50%,rgba(78,205,196,0.03) 0%,transparent 70%);
+}
+.bg-fx::after{
+content:’’;position:absolute;inset:0;
+background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
+background-size:64px 64px;
+mask-image:radial-gradient(ellipse 70% 70% at 50% 40%,black 0%,transparent 100%);
+}
+
+/* PARTICLES */
+.particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.particle{
+position:absolute;border-radius:50%;
+animation:float linear infinite;opacity:0;
+}
+@keyframes float{
+0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0;}
+10%{opacity:1;}
+90%{opacity:0.3;}
+100%{transform:translateY(-10vh) translateX(var(–drift)) scale(1);opacity:0;}
+}
+
+/* HEADER */
+header{
+position:fixed;top:0;left:0;right:0;z-index:100;
+background:rgba(4,4,14,0.88);backdrop-filter:blur(24px);
+border-bottom:1px solid var(–border);
+padding:0 24px;height:54px;
+display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+font-family:‘Cinzel’,serif;font-weight:900;font-size:1.05rem;letter-spacing:5px;
+color:#e8c96a;
+}
+nav a{
+font-size:0.78rem;color:#9090b8;text-decoration:none;
+letter-spacing:1px;margin-left:14px;transition:color 0.2s;white-space:nowrap;
+}
+nav a:hover{color:#e0e0f4;}
+
+/* HERO */
+.hero{
+position:relative;z-index:1;
+min-height:100svh;display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+text-align:center;padding:80px 24px 80px;
+}
+
+.hero-label{
+font-family:‘Cinzel’,serif;font-size:0.58rem;letter-spacing:8px;
+color:var(–muted);margin-bottom:24px;
+animation:up 0.9s 0.1s ease both;
+}
+
+.hero-title{
+font-family:‘Cinzel’,serif;
+font-size:clamp(4rem,16vw,9rem);
+font-weight:900;line-height:0.85;letter-spacing:6px;
+margin-bottom:10px;
+color:#e8c96a;
+text-shadow:0 0 60px rgba(201,168,76,0.4);
+animation:up 0.9s 0.2s ease both;
+}
+
+.hero-title-en{
+font-family:‘Cinzel’,serif;font-size:clamp(0.9rem,3vw,1.4rem);
+font-weight:400;letter-spacing:12px;color:var(–muted);
+margin-bottom:36px;
+animation:up 0.9s 0.3s ease both;
+}
+
+.hero-tagline{
+font-size:0.95rem;color:var(–muted);line-height:2.2;
+margin-bottom:56px;
+animation:up 0.9s 0.4s ease both;
+}
+
+.hero-ctas{
+display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+animation:up 0.9s 0.5s ease both;
+}
+
+.cta-btn{
+padding:14px 32px;border-radius:12px;
+font-family:‘Noto Sans JP’,sans-serif;
+font-size:0.82rem;font-weight:700;letter-spacing:2px;
+text-decoration:none;transition:all 0.25s;cursor:pointer;border:none;
+display:flex;align-items:center;gap:8px;
+}
+.cta-gold{
+background:linear-gradient(135deg,rgba(201,168,76,0.25),rgba(232,201,106,0.15));
+border:1px solid rgba(201,168,76,0.45);color:var(–gold2);
+}
+.cta-gold:hover{background:linear-gradient(135deg,rgba(201,168,76,0.4),rgba(232,201,106,0.25));transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.15);}
+.cta-blue{
+background:linear-gradient(135deg,rgba(74,158,255,0.18),rgba(122,184,255,0.1));
+border:1px solid rgba(74,158,255,0.4);color:var(–blue2);
+}
+.cta-blue:hover{background:linear-gradient(135deg,rgba(74,158,255,0.32),rgba(122,184,255,0.2));transform:translateY(-2px);box-shadow:0 10px 30px rgba(74,158,255,0.12);}
+.cta-ghost{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.1);color:var(–muted);
+}
+.cta-ghost:hover{border-color:rgba(255,255,255,0.2);color:var(–text);transform:translateY(-2px);}
+
+/* SCROLL */
+.scroll-hint{
+position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+display:flex;flex-direction:column;align-items:center;gap:10px;
+animation:up 1s 1.2s ease both;
+}
+.scroll-txt{font-size:0.55rem;letter-spacing:4px;color:var(–muted);}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(–muted),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.8);}50%{opacity:1;transform:scaleY(1.2);}}
+
+/* SECTION */
+.section{position:relative;z-index:1;padding:80px 24px;}
+.section-center{max-width:900px;margin:0 auto;}
+
+.sec-eyebrow{
+font-family:‘Cinzel’,serif;font-size:0.58rem;letter-spacing:6px;
+color:var(–muted);text-align:center;margin-bottom:48px;
+display:flex;align-items:center;gap:16px;
+}
+.sec-eyebrow::before,.sec-eyebrow::after{content:’’;flex:1;height:1px;background:linear-gradient(to right,transparent,var(–border),transparent);}
+
+/* TOOL CARDS */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+
+.tool-card{
+position:relative;overflow:hidden;
+border-radius:24px;border:1px solid var(–border);
+background:rgba(255,255,255,0.025);
+padding:36px 30px;
+text-decoration:none;color:inherit;
+transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1),border-color 0.3s,box-shadow 0.3s;
+display:block;
+}
+.tool-card::before{
+content:’’;position:absolute;inset:0;border-radius:24px;
+opacity:0;transition:opacity 0.35s;
+}
+.tool-card.tc-gold::before{background:radial-gradient(circle at 20% 20%,rgba(201,168,76,0.14),transparent 55%);}
+.tool-card.tc-blue::before{background:radial-gradient(circle at 20% 20%,rgba(74,158,255,0.12),transparent 55%);}
+.tool-card:hover{transform:translateY(-8px);}
+.tool-card.tc-gold:hover{border-color:rgba(201,168,76,0.4);box-shadow:0 20px 60px rgba(201,168,76,0.08);}
+.tool-card.tc-blue:hover{border-color:rgba(74,158,255,0.35);box-shadow:0 20px 60px rgba(74,158,255,0.07);}
+.tool-card:hover::before{opacity:1;}
+
+.tc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;}
+.tc-num{
+font-family:‘Cinzel’,serif;font-size:4.5rem;font-weight:900;line-height:1;
+}
+.tc-gold .tc-num{background:linear-gradient(135deg,var(–gold3),var(–gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.tc-blue .tc-num{background:linear-gradient(135deg,var(–blue2),var(–blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.tc-co{
+font-size:0.6rem;font-weight:700;letter-spacing:1px;
+padding:4px 10px;border-radius:12px;
+background:rgba(255,208,96,0.12);color:#ffd060;
+border:1px solid rgba(255,208,96,0.3);
+display:none;
+}
+
+.tc-label{font-family:‘Cinzel’,serif;font-size:0.58rem;letter-spacing:4px;color:var(–muted);margin-bottom:8px;}
+.tc-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:16px;}
+
+.tc-features{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.tc-feat{
+font-size:0.85rem;color:var(–muted);
+display:flex;align-items:center;gap:8px;
+}
+.tc-feat-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+.tc-gold .tc-feat-dot{background:var(–gold);}
+.tc-blue .tc-feat-dot{background:var(–blue);}
+
+.tc-btn{
+width:100%;padding:14px;border-radius:11px;border:none;
+font-family:‘Noto Sans JP’,sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:2px;
+cursor:pointer;transition:all 0.2s;
+}
+.tc-gold .tc-btn{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.35);color:var(–gold2);}
+.tc-blue .tc-btn{background:rgba(74,158,255,0.12);border:1px solid rgba(74,158,255,0.3);color:var(–blue2);}
+.tc-gold .tc-btn:hover{background:rgba(201,168,76,0.28);}
+.tc-blue .tc-btn:hover{background:rgba(74,158,255,0.25);}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+.feat-item{
+background:rgba(255,255,255,0.02);border:1px solid var(–border);
+border-radius:16px;padding:24px 20px;
+transition:border-color 0.2s,transform 0.2s;
+}
+.feat-item:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-2px);}
+.feat-icon{font-size:1.5rem;margin-bottom:12px;display:block;}
+.feat-title{font-size:0.82rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.feat-desc{font-size:0.85rem;color:var(–muted);line-height:1.85;}
+
+/* STATS BAR */
+.stats-bar{
+position:relative;z-index:1;
+background:rgba(255,255,255,0.02);
+border-top:1px solid var(–border);border-bottom:1px solid var(–border);
+padding:32px 24px;
+}
+.stats-inner{
+max-width:700px;margin:0 auto;
+display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:24px;
+text-align:center;
+}
+.stat-item-val{
+font-family:‘Cinzel’,serif;font-size:1.8rem;font-weight:700;
+background:linear-gradient(135deg,var(–gold2),var(–gold));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+margin-bottom:4px;
+}
+.stat-item-lbl{font-size:0.78rem;color:var(–muted);letter-spacing:2px;}
+
+/* AD */
+.ad-wrap{position:relative;z-index:1;margin:0 auto 32px;max-width:680px;padding:0 24px;}
+.ad-placeholder{background:rgba(255,255,255,0.015);border:1px dashed rgba(255,255,255,0.05);border-radius:10px;padding:18px;text-align:center;font-size:0.65rem;color:var(–muted);letter-spacing:2px;min-height:60px;display:flex;align-items:center;justify-content:center;}
+
+/* FOOTER */
+footer{
+position:relative;z-index:1;
+text-align:center;padding:32px 24px 40px;
+font-size:0.68rem;color:var(–muted);line-height:2.2;
+border-top:1px solid var(–border);
+}
+footer a{color:var(–muted);text-decoration:none;}
+footer a:hover{color:var(–text);}
+
+@keyframes up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+</style>
+
+</head>
+<body>
+
+<div class="bg-fx"></div>
+<div class="particles" id="particles"></div>
+
+<header>
+  <div class="logo">LOTO LAB</div>
+  <nav>
+    <a href="loto7-gold.html">LOTO 7</a>
+    <a href="loto6.html">LOTO 6</a>
+    <a href="lucky-items.html">開運</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-label">FREE NUMBER PREDICTION TOOL</div>
+  <div class="hero-title">LOTO<br>LAB</div>
+  <div class="hero-title-en">予　測　ツ　ー　ル</div>
+  <p class="hero-tagline">
+    統計 × 傾向分析 × 独自アルゴリズム<br>
+    ロト7・ロト6の番号生成を、無料で。
+  </p>
+  <div class="hero-ctas">
+    <a href="loto7-gold.html" class="cta-btn cta-gold">◆ LOTO 7 を使う</a>
+    <a href="loto6.html"      class="cta-btn cta-blue">◆ LOTO 6 を使う</a>
+    <a href="lucky-items.html" class="cta-btn cta-ghost">開運グッズ →</a>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-txt">SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div><div class="stat-item-val">無料</div><div class="stat-item-lbl">完全無料</div></div>
+    <div><div class="stat-item-val">20回</div><div class="stat-item-lbl">直近分析対象</div></div>
+    <div><div class="stat-item-val">10+</div><div class="stat-item-lbl">カスタマイズ項目</div></div>
+    <div><div class="stat-item-val">即時</div><div class="stat-item-lbl">番号生成速度</div></div>
+  </div>
+</div>
+
+<!-- AD -->
+
+<div class="ad-wrap" style="margin-top:32px;">
+  <div class="ad-placeholder">広告</div>
+</div>
+
+<!-- TOOLS -->
+
+<section class="section">
+  <div class="section-center">
+    <div class="sec-eyebrow">PREDICTION TOOLS</div>
+    <div class="tools-grid">
+
+```
+  <a class="tool-card tc-gold" href="loto7-gold.html">
+    <div class="tc-top">
+      <div>
+        <div class="tc-label">LOTO 7</div>
+        <div class="tc-num">7</div>
+      </div>
+      <div class="tc-co" id="co7">CO中</div>
+    </div>
+    <div class="tc-title">ダブル7倍数<br>ブリッジ法</div>
+    <div class="tc-features">
+      <div class="tc-feat"><div class="tc-feat-dot"></div>7の倍数＋ブリッジ自動生成</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>前回引張り・連番・末尾被り設定</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>奇偶バランス5段階選択</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>ホット/コールド数字分析</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>キャリーオーバー額表示</div>
+    </div>
+    <button class="tc-btn">番号を生成する →</button>
+  </a>
+
+  <a class="tool-card tc-blue" href="loto6.html">
+    <div class="tc-top">
+      <div>
+        <div class="tc-label">LOTO 6</div>
+        <div class="tc-num">6</div>
+      </div>
+      <div class="tc-co" id="co6">CO中</div>
+    </div>
+    <div class="tc-title">低高バランス<br>番号生成</div>
+    <div class="tc-features">
+      <div class="tc-feat"><div class="tc-feat-dot"></div>低(1〜21)/高(22〜43)バランス</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>奇偶バランス5段階選択</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>前回引張り数設定</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>直近20回統計分析</div>
+      <div class="tc-feat"><div class="tc-feat-dot"></div>キャリーオーバー額表示</div>
+    </div>
+    <button class="tc-btn">番号を生成する →</button>
+  </a>
+
+</div>
+```
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+
+<section class="section" style="padding-top:0;">
+  <div class="section-center">
+    <div class="sec-eyebrow">FEATURES</div>
+    <div class="feat-grid">
+      <div class="feat-item"><span class="feat-icon">📊</span><div class="feat-title">統計データ分析</div><div class="feat-desc">直近20回の当選番号からホット数字・コールド数字・平均合計値を自動計算</div></div>
+      <div class="feat-item"><span class="feat-icon">⚖️</span><div class="feat-title">奇偶バランス</div><div class="feat-desc">奇数・偶数の割合をスライダーで5段階に設定。統計的に出やすいパターンを選択</div></div>
+      <div class="feat-item"><span class="feat-icon">🔁</span><div class="feat-title">前回引張り</div><div class="feat-desc">前回当選番号からの引張り数字を自動組み込み。個数も0〜3個で設定可能</div></div>
+      <div class="feat-item"><span class="feat-icon">💰</span><div class="feat-title">CO情報表示</div><div class="feat-desc">キャリーオーバー発生中は金額をリアルタイム表示。高配当回を逃さない</div></div>
+      <div class="feat-item"><span class="feat-icon">🎯</span><div class="feat-title">詳細設定</div><div class="feat-desc">連番・末尾被り・7の倍数ON/OFFなど、細かい条件をスライダーで直感的に設定</div></div>
+      <div class="feat-item"><span class="feat-icon">✅</span><div class="feat-title">完全無料</div><div class="feat-desc">すべての機能が無料。会員登録不要でいつでも何度でも使えます</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AD -->
+
+<div class="ad-wrap">
+  <div class="ad-placeholder">広告</div>
+</div>
+
+<footer>
+  ※ 当サイトは統計情報に基づく参考ツールです。当選を保証するものではありません。<br>
+  宝くじは適度に楽しみましょう。20歳未満の方の購入は禁止されています。<br><br>
+  <a href="loto7-gold.html">LOTO 7</a> &nbsp;|&nbsp;
+  <a href="loto6.html">LOTO 6</a> &nbsp;|&nbsp;
+  <a href="lucky-items.html">開運グッズ</a><br><br>
+  © 2026 LOTO LAB
+</footer>
+
+<script>
+// パーティクル生成
+const pc = document.getElementById('particles');
+for(let i=0;i<28;i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const isGold = Math.random() > 0.4;
+  const size = Math.random()*3+1;
+  p.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    background:${isGold?'rgba(201,168,76,':'rgba(74,158,255,'}${Math.random()*0.6+0.2})};
+    --drift:${(Math.random()-0.5)*120}px;
+    animation-duration:${Math.random()*15+10}s;
+    animation-delay:${Math.random()*12}s;
+    box-shadow:0 0 ${size*3}px ${isGold?'rgba(201,168,76,0.5)':'rgba(74,158,255,0.4)'};
+  `;
+  pc.appendChild(p);
+}
+
+// CO表示
+if(true)  document.getElementById('co7').style.display='block'; // ロト7 CO
+if(true)  document.getElementById('co6').style.display='block'; // ロト6 CO
+</script>
+
+</body>
+</html>
