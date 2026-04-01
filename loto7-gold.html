@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+　<!DOCTYPE html>
 
 <html lang="ja" style="background:#1a1508;">
 <head>
@@ -47,7 +47,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .co-bar-amt{margin-left:auto;font-family:'Cinzel',Georgia,serif;font-weight:700;font-size:0.85rem;color:var(--gold2);}
 .sec-label{position:relative;z-index:1;text-align:center;font-size:0.75rem;letter-spacing:5px;color:var(--dim);margin:24px 0 14px;display:flex;align-items:center;gap:10px;padding:0 16px;}
 .sec-label::before,.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.toggle-label{cursor:pointer;user-select:none;}
+.toggle-label{cursor:pointer;user-select:none;-webkit-tap-highlight-color:rgba(201,168,76,0.15);touch-action:manipulation;}
 .toggle-arrow{font-size:0.6rem;color:var(--gold);margin-left:8px;transition:transform 0.3s ease;display:inline-block;}
 .collapsible{overflow:hidden;max-height:2000px;transition:max-height 0.4s ease,opacity 0.3s ease;opacity:1;}
 .collapsible.closed{max-height:0;opacity:0;}
@@ -270,7 +270,14 @@ let RECENT_DATA=[...FALLBACK_DATA];
 let hotNums=[],coldNums=[],avgSumVal=128;
 
 function updateOddEven(v){document.getElementById(‘oddEvenModeVal’).textContent=ODD_EVEN_LABELS[v];}
-function toggleSection(wrapId,arrowId){const wrap=document.getElementById(wrapId);const arrow=document.getElementById(arrowId);const isClosed=wrap.classList.toggle(‘closed’);arrow.style.transform=isClosed?‘rotate(180deg)’:‘rotate(0deg)’;}
+function toggleSection(wrapId,arrowId){
+const wrap=document.getElementById(wrapId);
+const arrow=document.getElementById(arrowId);
+if(!wrap||!arrow)return;
+const isClosed=wrap.classList.contains(‘closed’);
+if(isClosed){wrap.classList.remove(‘closed’);arrow.style.transform=‘rotate(0deg)’;}
+else{wrap.classList.add(‘closed’);arrow.style.transform=‘rotate(180deg)’;}
+}
 function updateSlider(id,valId,fmt){document.getElementById(valId).textContent=fmt(document.getElementById(id).value);}
 
 function renderCarryover(){
@@ -377,7 +384,7 @@ const vals=nums.map(x=>x.n);const sum=vals.reduce((a,b)=>a+b,0);const odd=vals.f
 const low=vals.filter(n=>n<=14).length;const mid=vals.filter(n=>n>=15&&n<=28).length;const high=vals.filter(n=>n>=29).length;
 const allOk=((odd===3&&even===4)||(odd===4&&even===3))&&sum>=110&&sum<=150&&low<=4&&high<=3&&mid>=1;
 const card=document.createElement(‘div’);card.className=‘output-card’;card.style.animationDelay=`${(setNo-1)*0.07}s`;
-const ballsHTML=nums.map(x=>{let cls=‘out-ball normal’;if(x.type===‘mult’)cls=x.hot?‘out-ball mult hot-ring’:‘out-ball mult’;if(x.type===‘bridge’)cls=‘out-ball bridge’;if(x.type===‘pull’)cls=‘out-ball pull’;if(x.type===‘serial’)cls=‘out-ball serial’;return`<div class="${cls}">${String(x.n).padStart(2,'00')}</div>`;}).join(’’);
+const ballsHTML=nums.map(x=>{let cls=‘out-ball normal’;if(x.type===‘mult’)cls=x.hot?‘out-ball mult hot-ring’:‘out-ball mult’;if(x.type===‘bridge’)cls=‘out-ball bridge’;if(x.type===‘pull’)cls=‘out-ball pull’;if(x.type===‘serial’)cls=‘out-ball serial’;return`<div class="${cls}">${String(x.n).padStart(2,'0')}</div>`;}).join(’’);
 const hasPull=nums.some(x=>x.type===‘pull’);const hasSerial=nums.some(x=>x.type===‘serial’||x.type===‘bridge’);
 const tailGroups={};vals.forEach(n=>{const t=n%10;tailGroups[t]=(tailGroups[t]||0)+1;});const tailPairs=Object.values(tailGroups).filter(v=>v>=2).length;
 const badges=[hasPull?’<span class="badge pull-badge">引張</span>’:’’,hasSerial?’<span class="badge serial-badge">連番</span>’:’’,tailPairs?`<span class="badge tail-badge">末尾×${tailPairs}</span>`:’’].join(’’);
