@@ -314,10 +314,11 @@ updateSlider(‘serialCount’,‘serialCountVal’,v=>v==‘0’?‘なし’:v
 updateSlider(‘tailCount’,‘tailCountVal’,v=>v==‘0’?‘なし’:v+‘組’);
 updateSlider(‘multMode’,‘multModeVal’,v=>[‘使わない’,‘2個(通常)’,‘3個’][v]);
 updateOddEven(document.getElementById(‘oddEvenMode’).value);
-renderRecentResults();analyzeStats();renderCarryover();
-document.getElementById(‘statusText’).textContent=‘最新データを取得中…’;
+renderRecentResults();
+analyzeStats();
 document.getElementById(‘statusText’).textContent=`◆ キャッシュデータ表示中 — 第${FALLBACK_DATA[0].round}回まで`;
 document.querySelector(’.status-dot’).style.background=‘var(–gold)’;
+renderCarryover();
 };
 
 function generateNumbers(){
