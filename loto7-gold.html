@@ -1,4 +1,4 @@
-　<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="ja" style="background:#1a1508;">
 <head>
@@ -147,7 +147,7 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.78rem;colo
   <span id="coBarText">キャリーオーバー中</span>
   <span class="co-bar-amt" id="coBarAmt"></span>
 </div>
-<div class="sec-label toggle-label" onclick="toggleSection('recentWrap','recentArrow')">
+<div class="sec-label toggle-label" id="recentToggle">
   直　近　の　当　選　番　号
   <span class="toggle-arrow" id="recentArrow" style="transform:rotate(180deg)">▲</span>
 </div>
@@ -156,7 +156,7 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.78rem;colo
     <div style="text-align:center;padding:20px;font-size:0.75rem;color:var(--muted);">読み込み中...</div>
   </div>
 </div>
-<div class="sec-label toggle-label" onclick="toggleSection('statsWrap','statsArrow')">
+<div class="sec-label toggle-label" id="statsToggle">
   直　近　１０回　傾　向　分　析
   <span class="toggle-arrow" id="statsArrow" style="transform:rotate(180deg)">▲</span>
 </div>
@@ -226,7 +226,7 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.78rem;colo
 </div>
 <div class="sec-label" style="margin-top:20px;"></div>
 <div class="gen-btn-wrap">
-  <button class="gen-btn" onclick="generateNumbers()">◆ 番 号 を 生 成 す る ◆</button>
+  <button class="gen-btn" id="genBtn">◆ 番 号 を 生 成 す る ◆</button>
 </div>
 <div class="sec-label" style="margin-top:20px;"></div>
 <div class="legend">
@@ -326,6 +326,9 @@ analyzeStats();
 document.getElementById(‘statusText’).textContent=`◆ キャッシュデータ表示中 — 第${FALLBACK_DATA[0].round}回まで`;
 document.querySelector(’.status-dot’).style.background=‘var(–gold)’;
 renderCarryover();
+document.getElementById(‘recentToggle’).addEventListener(‘click’,function(){toggleSection(‘recentWrap’,‘recentArrow’);});
+document.getElementById(‘statsToggle’).addEventListener(‘click’,function(){toggleSection(‘statsWrap’,‘statsArrow’);});
+document.getElementById(‘genBtn’) && document.getElementById(‘genBtn’).addEventListener(‘click’,generateNumbers);
 };
 
 function generateNumbers(){
