@@ -312,7 +312,7 @@ document.getElementById(‘hotNums’).innerHTML=hotNums.map(x=>`<div class="hc-
 document.getElementById(‘coldNums’).innerHTML=coldNums.map(x=>`<div class="hc-num cold">${String(x.n).padStart(2,'0')}<span class="cnt">${x.cnt}回</span></div>`).join(’’);
 }
 
-window.onload=async()=>{
+window.onload=function(){
 updateSlider(‘setCount’,‘setCountVal’,v=>v+‘セット’);
 updateSlider(‘targetSum’,‘targetSumVal’,v=>v);
 updateSlider(‘hotPriority’,‘hotPriorityVal’,v=>[‘低’,‘中’,‘高’][v]);
