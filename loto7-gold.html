@@ -324,7 +324,7 @@ updateOddEven(document.getElementById(‘oddEvenMode’).value);
 renderRecentResults();
 analyzeStats();
 document.getElementById(‘statusText’).textContent=`◆ キャッシュデータ表示中 — 第${FALLBACK_DATA[0].round}回まで`;
-document.querySelector(’.status-dot’).style.background=‘var(–gold)’;
+document.querySelector(’.status-dot’).style.background=’#c9a84c’;
 renderCarryover();
 document.getElementById(‘recentToggle’).addEventListener(‘click’,function(){toggleSection(‘recentWrap’,‘recentArrow’);});
 document.getElementById(‘statsToggle’).addEventListener(‘click’,function(){toggleSection(‘statsWrap’,‘statsArrow’);});
