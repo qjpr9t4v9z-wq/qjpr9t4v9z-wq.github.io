@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja" style="background:#0f0f12;">
 <head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-27ZFDTJYFC"></script>
@@ -12,22 +13,21 @@ gtag('config','G-27ZFDTJYFC');
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="ロト6番号生成ツール。低高バランス・奇偶3:3・前回引張り・合計値120〜150を考慮した無料予測支援ツール。">
+<meta name="description" content="ロト6番号予測ツール。低高バランス・奇偶バランス・前回引張りを考慮した無料番号生成。キャリーオーバー情報も表示。">
 <title>LOTO6 予測ツール | 無料番号生成</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--bg:#0f0f12;--bg2:#181820;--bg3:#202028;--muted:#9090b8;--border:rgba(255,255,255,0.08);}
-body{background:#0f0f12!important;color:#d8d8e0!important;font-family:'Noto Sans JP','Hiragino Sans',sans-serif;font-size:16px;line-height:1.7;max-width:480px;margin:0 auto;-webkit-text-size-adjust:100%;}
+body{background:#0f0f12!important;color:#d8d8e0!important;font-family:sans-serif;font-size:16px;line-height:1.7;max-width:480px;margin:0 auto;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,200,220,0.05) 0%,transparent 60%);pointer-events:none;z-index:0;}
 .site-header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#1a1a22,#252535);border-bottom:2px solid #a0a0b8;padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;}
-.site-logo{font-family:'Cinzel',Georgia,serif;font-weight:900;font-size:0.95rem;letter-spacing:3px;color:#d8d8e8;text-decoration:none;}
+.site-logo{font-weight:900;font-size:0.95rem;letter-spacing:3px;color:#d8d8e8;text-decoration:none;}
 .site-nav{display:flex;gap:4px;}
 .site-nav a{font-size:0.72rem;color:#9090a8;text-decoration:none;padding:6px 10px;border-radius:8px;letter-spacing:1px;}
 .site-nav a.active{color:#f0f0ff;background:rgba(200,200,220,0.18);border:1px solid rgba(200,200,220,0.25);}
 .hero{position:relative;z-index:1;text-align:center;padding:48px 24px 28px;background:linear-gradient(160deg,#10101a 0%,#1c1c28 50%,#141420 100%);border-bottom:1px solid #606078;}
-.hero-sup{font-family:'Cinzel',Georgia,serif;font-size:0.6rem;letter-spacing:5px;color:#707088;margin-bottom:12px;}
-.hero-title{font-family:'Cinzel',Georgia,serif;font-size:3.5rem;font-weight:900;letter-spacing:6px;line-height:1;margin-bottom:4px;color:#c8c8d8;}
+.hero-sup{font-size:0.6rem;letter-spacing:5px;color:#707088;margin-bottom:12px;}
+.hero-title{font-size:3.5rem;font-weight:900;letter-spacing:6px;line-height:1;margin-bottom:4px;color:#c8c8d8;}
 .hero-sub{font-size:0.7rem;letter-spacing:6px;color:#606078;margin-bottom:20px;}
 .hero-divider{display:flex;align-items:center;gap:12px;justify-content:center;}
 .hero-divider span{color:#808098;font-size:0.6rem;}
@@ -37,13 +37,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .status-bar{position:relative;z-index:1;margin:12px 16px 0;background:rgba(94,205,164,0.08);border:1px solid rgba(94,205,164,0.3);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:0.88rem;color:#5ecda4;}
 .status-dot{width:7px;height:7px;border-radius:50%;background:#5ecda4;flex-shrink:0;}
 .co-bar{position:relative;z-index:1;margin:6px 16px 0;background:rgba(255,208,96,0.08);border:1px solid rgba(255,208,96,0.35);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:8px;font-size:0.88rem;color:#ffd060;width:calc(100% - 32px);}
-.co-bar-amt{margin-left:auto;font-family:'Cinzel',Georgia,serif;font-weight:700;font-size:0.95rem;color:#ffe090;}
+.co-bar-amt{margin-left:auto;font-weight:700;font-size:0.95rem;color:#ffe090;}
 .sec-label{position:relative;z-index:1;text-align:center;font-size:0.75rem;letter-spacing:4px;color:#808098;margin:20px 0 12px;display:flex;align-items:center;gap:10px;padding:0 16px;}
 .sec-label::before,.sec-label::after{content:'';flex:1;height:1px;background:#404058;}
-.toggle-label{cursor:pointer;user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.toggle-label{cursor:pointer;user-select:none;touch-action:manipulation;}
 .toggle-arrow{font-size:0.7rem;color:#a0a0b8;margin-left:8px;transition:transform 0.3s ease;display:inline-block;}
 .collapsible{overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s ease,opacity 0.3s ease;}
-.collapsible.open{max-height:2000px;opacity:1;}
+.collapsible.open{max-height:3000px;opacity:1;}
 .results-list{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;padding:0 16px;}
 .result-card{background:#181820;border:1px solid #383850;border-radius:14px;padding:16px;}
 .result-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -53,27 +53,27 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .badge-new{font-size:0.72rem;background:linear-gradient(135deg,#9090b0,#c0c0d8);color:#0f0f18;padding:3px 10px;border-radius:10px;font-weight:700;}
 .badge-co{font-size:0.72rem;background:rgba(255,208,96,0.15);color:#ffd060;border:1px solid rgba(255,208,96,0.4);padding:3px 10px;border-radius:10px;font-weight:700;}
 .result-balls{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-.r-ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;font-family:'Cinzel',Georgia,serif;}
+.r-ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;}
 .r-ball.low{background:linear-gradient(145deg,#2a2a3a,#484860);border:1.5px solid #9090b0;color:#e0e0f0;}
 .r-ball.high{background:linear-gradient(145deg,#202030,#383850);border:1.5px solid #6868a0;color:#c8c8e8;}
-.r-ball.bonus-label{width:auto;height:auto;background:transparent;border:none;color:#707088;font-size:0.75rem;font-weight:400;}
+.r-ball.bonus-label{width:auto;height:auto;background:transparent;border:none;color:#707088;font-size:0.75rem;}
 .r-ball.bonus{background:transparent;border:1.5px dashed #505068;color:#707088;font-size:0.75rem;}
 .stats-wrap{position:relative;z-index:1;margin:0 16px;background:#181820;border:1px solid #383850;border-radius:14px;padding:18px;}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
 .stat-box{background:linear-gradient(135deg,#202028,#252535);border-radius:10px;padding:14px 8px;text-align:center;border:1px solid #383850;}
-.stat-val{font-family:'Cinzel',Georgia,serif;font-size:1.3rem;font-weight:700;color:#c8c8d8;margin-bottom:6px;}
+.stat-val{font-size:1.3rem;font-weight:700;color:#c8c8d8;margin-bottom:6px;}
 .stat-lbl{font-size:0.75rem;color:#707088;}
 .balance-row{display:flex;gap:10px;margin-bottom:16px;}
 .balance-box{flex:1;background:linear-gradient(135deg,#202028,#252535);border-radius:10px;padding:12px;text-align:center;border:1px solid #383850;}
 .balance-title{font-size:0.75rem;color:#707088;margin-bottom:6px;}
 .balance-bar-wrap{height:8px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden;margin-bottom:6px;}
-.balance-bar-fill{height:100%;border-radius:4px;transition:width 0.8s ease;}
-.balance-nums{font-family:'Cinzel',Georgia,serif;font-size:0.85rem;font-weight:700;color:#c0c0d0;}
+.balance-bar-fill{height:100%;border-radius:4px;}
+.balance-nums{font-size:0.85rem;font-weight:700;color:#c0c0d0;}
 .hot-cold-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .hc-box{background:linear-gradient(135deg,#202028,#252535);border-radius:10px;padding:14px 12px;border:1px solid #383850;}
 .hc-title{font-size:0.82rem;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .hc-nums{display:flex;flex-wrap:wrap;gap:5px;}
-.hc-num{width:36px;height:36px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;font-family:'Cinzel',Georgia,serif;}
+.hc-num{width:36px;height:36px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;}
 .hc-num .cnt{font-size:0.6rem;font-weight:400;margin-top:1px;}
 .hc-num.hot{background:rgba(220,80,80,0.18);border:1.5px solid rgba(220,80,80,0.45);color:#e08888;}
 .hc-num.cold{background:rgba(160,160,200,0.12);border:1.5px solid rgba(160,160,200,0.35);color:#a0a0c8;}
@@ -82,9 +82,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .slider-row:last-child{margin-bottom:0;}
 .slider-label{font-size:0.85rem;color:#909090;min-width:90px;}
 .slider-wrap{flex:1;}
-input[type=range]{width:100%;height:3px;-webkit-appearance:none;background:#303040;border-radius:2px;outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#a0a0c0,#d0d0e8);border:2px solid #0f0f18;cursor:pointer;}
-.slider-val{font-family:'Cinzel',Georgia,serif;font-size:1rem;font-weight:700;color:#c8c8d8;min-width:40px;text-align:right;}
+input[type=range]{width:100%;height:3px;-webkit-appearance:none;background:#303040;border-radius:2px;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#a0a0c0,#d0d0e8);cursor:pointer;}
+.slider-val{font-size:1rem;font-weight:700;color:#c8c8d8;min-width:40px;text-align:right;}
 .settings-divider{font-size:0.78rem;color:#707088;text-align:center;margin:16px 0;display:flex;align-items:center;gap:10px;}
 .settings-divider::before,.settings-divider::after{content:'';flex:1;height:1px;background:#404058;}
 .gen-btn-wrap{position:relative;z-index:1;padding:0 16px;}
@@ -101,7 +101,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .out-judge.ok{background:rgba(94,205,164,0.15);color:#5ecda4;border:1px solid rgba(94,205,164,0.35);}
 .out-judge.warn{background:rgba(255,208,96,0.12);color:#ffd060;border:1px solid rgba(255,208,96,0.3);}
 .out-balls{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
-.out-ball{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;font-family:'Cinzel',Georgia,serif;}
+.out-ball{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;}
 .out-ball.low{background:linear-gradient(145deg,#2a2a3a,#484860);border:2px solid #9090b0;color:#e8e8f8;}
 .out-ball.high{background:linear-gradient(145deg,#202030,#363650);border:2px solid #6868a0;color:#c8c8e8;}
 .out-ball.pull{background:linear-gradient(145deg,#382818,#604830);border:2px solid #c09060;color:#e8c888;}
@@ -129,7 +129,7 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.82rem;colo
 <div class="hero">
   <div class="hero-sup">NUMBER PREDICTION TOOL</div>
   <div class="hero-title">LOTO 6</div>
-  <div class="hero-sub">予　測　ツ　ー　ル</div>
+  <div class="hero-sub">予測ツール</div>
   <div class="hero-divider"><span>◆</span></div>
 </div>
 <div class="ad-wrap"><div class="ad-placeholder">広告</div></div>
@@ -138,9 +138,9 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.82rem;colo
   <span>キャリーオーバー発生中</span>
   <span class="co-bar-amt" id="coBarAmt"></span>
 </div>
-<div class="sec-label toggle-label" id="recentToggle">直　近　の　当　選　番　号<span class="toggle-arrow" id="recentArrow">▲</span></div>
+<div class="sec-label toggle-label" id="recentToggle">直近の当選番号<span class="toggle-arrow" id="recentArrow">▲</span></div>
 <div class="collapsible" id="recentWrap"><div class="results-list" id="resultsList"></div></div>
-<div class="sec-label toggle-label" id="statsToggle">直　近　２０回　傾　向　分　析<span class="toggle-arrow" id="statsArrow">▲</span></div>
+<div class="sec-label toggle-label" id="statsToggle">直近20回 傾向分析<span class="toggle-arrow" id="statsArrow">▲</span></div>
 <div class="collapsible" id="statsWrap">
   <div class="stats-wrap">
     <div class="stats-grid">
@@ -153,45 +153,280 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.82rem;colo
       <div class="balance-box"><div class="balance-title">高（22〜43）</div><div class="balance-bar-wrap"><div class="balance-bar-fill" id="highBar" style="background:#6060a0;width:50%;"></div></div><div class="balance-nums" id="highPct" style="color:#6060a0;">-</div></div>
     </div>
     <div class="hot-cold-grid">
-      <div class="hc-box"><div class="hc-title" style="color:#e08888;">🔥 ホット数字</div><div class="hc-nums" id="hotNums">...</div></div>
-      <div class="hc-box"><div class="hc-title" style="color:#6080a0;">🧊 コールド数字</div><div class="hc-nums" id="coldNums">...</div></div>
+      <div class="hc-box"><div class="hc-title" style="color:#e08888;">🔥 ホット数字</div><div class="hc-nums" id="hotNums"></div></div>
+      <div class="hc-box"><div class="hc-title" style="color:#6080a0;">🧊 コールド数字</div><div class="hc-nums" id="coldNums"></div></div>
     </div>
   </div>
 </div>
 <div class="ad-wrap"><div class="ad-placeholder">広告</div></div>
-<div class="sec-label">予　測　設　定</div>
+<div class="sec-label">予測設定</div>
 <div class="settings-box">
-  <div class="slider-row">
-    <div class="slider-label">生成セット数</div>
-    <div class="slider-wrap"><input type="range" id="setCount" min="1" max="10" value="5" oninput="updateSlider('setCount','setCountVal',function(v){return v+'セット';})"></div>
-    <div class="slider-val" id="setCountVal">5セット</div>
-  </div>
-  <div class="slider-row">
-    <div class="slider-label">合計値の目標</div>
-    <div class="slider-wrap"><input type="range" id="targetSum" min="120" max="150" value="135" oninput="updateSlider('targetSum','targetSumVal',function(v){return v;})"></div>
-    <div class="slider-val" id="targetSumVal">135</div>
-  </div>
-  <div class="slider-row">
-    <div class="slider-label">ホット優先度</div>
-    <div class="slider-wrap"><input type="range" id="hotPriority" min="0" max="2" value="1" oninput="updateSlider('hotPriority','hotPriorityVal',function(v){return ['低','中','高'][v];})"></div>
-    <div class="slider-val" id="hotPriorityVal">中</div>
-  </div>
+  <div class="slider-row"><div class="slider-label">生成セット数</div><div class="slider-wrap"><input type="range" id="setCount" min="1" max="10" value="5" oninput="updateSlider('setCount','setCountVal',function(v){return v+'セット';})"></div><div class="slider-val" id="setCountVal">5セット</div></div>
+  <div class="slider-row"><div class="slider-label">合計値の目標</div><div class="slider-wrap"><input type="range" id="targetSum" min="120" max="150" value="135" oninput="updateSlider('targetSum','targetSumVal',function(v){return v;})"></div><div class="slider-val" id="targetSumVal">135</div></div>
+  <div class="slider-row"><div class="slider-label">ホット優先度</div><div class="slider-wrap"><input type="range" id="hotPriority" min="0" max="2" value="1" oninput="updateSlider('hotPriority','hotPriorityVal',function(v){return ['低','中','高'][v];})"></div><div class="slider-val" id="hotPriorityVal">中</div></div>
   <div class="settings-divider">詳細設定</div>
-  <div class="slider-row">
-    <div class="slider-label">前回引張り数</div>
-    <div class="slider-wrap"><input type="range" id="pullCount" min="0" max="2" value="1" oninput="updateSlider('pullCount','pullCountVal',function(v){return v==0?'なし':v+'個';})"></div>
-    <div class="slider-val" id="pullCountVal">1個</div>
-  </div>
-  <div class="slider-row">
-    <div class="slider-label">低高バランス</div>
-    <div class="slider-wrap"><input type="range" id="lowHighMode" min="0" max="2" value="1" oninput="updateSlider('lowHighMode','lowHighModeVal',function(v){return ['低寄り(4/2)','均等(3/3)','高寄り(2/4)'][v];})"></div>
-    <div class="slider-val" id="lowHighModeVal" style="font-size:0.7rem;min-width:70px;">均等(3/3)</div>
-  </div>
-  <div class="slider-row">
-    <div class="slider-label">奇偶バランス</div>
-    <div class="slider-wrap"><input type="range" id="oddEvenMode" min="0" max="4" value="2" oninput="updateOddEven(this.value)"></div>
-    <div class="slider-val" id="oddEvenModeVal" style="font-size:0.7rem;min-width:70px;">奇3偶3</div>
-  </div>
+  <div class="slider-row"><div class="slider-label">前回引張り数</div><div class="slider-wrap"><input type="range" id="pullCount" min="0" max="2" value="1" oninput="updateSlider('pullCount','pullCountVal',function(v){return v==0?'なし':v+'個';})"></div><div class="slider-val" id="pullCountVal">1個</div></div>
+  <div class="slider-row"><div class="slider-label">低高バランス</div><div class="slider-wrap"><input type="range" id="lowHighMode" min="0" max="2" value="1" oninput="updateSlider('lowHighMode','lowHighModeVal',function(v){return ['低寄り(4/2)','均等(3/3)','高寄り(2/4)'][v];})"></div><div class="slider-val" id="lowHighModeVal" style="font-size:0.7rem;min-width:70px;">均等(3/3)</div></div>
+  <div class="slider-row"><div class="slider-label">奇偶バランス</div><div class="slider-wrap"><input type="range" id="oddEvenMode" min="0" max="4" value="2" oninput="updateOddEven(this.value)"></div><div class="slider-val" id="oddEvenModeVal" style="font-size:0.7rem;min-width:70px;">奇3偶3</div></div>
 </div>
 <div class="sec-label" style="margin-top:20px;"></div>
-<div class="gen-btn-wrap"><button class="gen-btn"​​​​​​​​​​​​​​​​
+<div class="gen-btn-wrap"><button class="gen-btn" id="genBtn">◆ 番号を生成する ◆</button></div>
+<div class="sec-label" style="margin-top:16px;"></div>
+<div class="legend">
+  <div class="legend-item"><div class="leg-dot" style="background:#8080c0;"></div>低数字(1〜21)</div>
+  <div class="legend-item"><div class="leg-dot" style="background:#6060a0;"></div>高数字(22〜43)</div>
+  <div class="legend-item"><div class="leg-dot" style="background:#d08030;"></div>前回引張り</div>
+</div>
+<div class="sec-label" id="outputLabel" style="display:none;">生成結果</div>
+<div class="output-section" id="outputSection"></div>
+<div class="ad-wrap" id="adAfterResult" style="display:none;"><div class="ad-placeholder">広告</div></div>
+<footer>
+  <div class="footer-links">
+    <a href="index.html">TOP</a>
+    <a href="loto7-gold.html">LOTO 7</a>
+    <a href="loto6.html">LOTO 6</a>
+    <a href="lucky-items.html">開運グッズ</a>
+    <a href="privacy-policy.html">プライバシーポリシー</a>
+  </div>
+  <div class="footer-copy">※ 当選を保証するものではありません。楽しみの範囲でご利用ください。<br>© 2026 LOTO LAB</div>
+</footer>
+<script>
+var ODD_EVEN_LABELS=['奇2偶4','奇3偶3','奇4偶2','奇5偶1','奇1偶5'];
+var ODD_EVEN_VALS=[[2,4],[3,3],[4,2],[5,1],[1,5]];
+var FALLBACK_DATA=[
+  {round:2089,date:'2026/03/30',nums:[9,16,18,32,37,43],bonus:[13],co:true,coAmt:'2億3,680万円'},
+  {round:2088,date:'2026/03/26',nums:[8,16,18,27,37,39],bonus:[29],co:true,coAmt:'2億3,680万円'},
+  {round:2087,date:'2026/03/23',nums:[7,10,15,18,26,39],bonus:[13],co:false,coAmt:null},
+  {round:2086,date:'2026/03/19',nums:[4,11,19,28,35,40],bonus:[6],co:true,coAmt:'3億7,700万円'},
+  {round:2085,date:'2026/03/16',nums:[3,12,20,27,35,41],bonus:[15],co:true,coAmt:'2億8,400万円'},
+  {round:2084,date:'2026/03/12',nums:[8,17,18,19,30,39],bonus:[9],co:true,coAmt:'4億6,252万円'},
+  {round:2083,date:'2026/03/09',nums:[8,10,13,17,26,29],bonus:[43],co:true,coAmt:'2億1,024万円'},
+  {round:2082,date:'2026/03/05',nums:[5,14,22,31,36,43],bonus:[2],co:false,coAmt:null},
+  {round:2081,date:'2026/03/02',nums:[1,9,18,25,33,40],bonus:[12],co:true,coAmt:'1億5,200万円'},
+  {round:2080,date:'2026/02/26',nums:[6,11,20,28,35,42],bonus:[3],co:false,coAmt:null},
+  {round:2079,date:'2026/02/23',nums:[2,15,19,24,37,41],bonus:[8],co:true,coAmt:'2億3,100万円'},
+  {round:2078,date:'2026/02/19',nums:[7,16,23,30,38,43],bonus:[1],co:false,coAmt:null},
+  {round:2077,date:'2026/02/16',nums:[4,10,17,25,32,39],bonus:[21],co:true,coAmt:'1億8,600万円'},
+  {round:2076,date:'2026/02/12',nums:[3,9,14,22,31,38],bonus:[5],co:false,coAmt:null},
+  {round:2075,date:'2026/02/09',nums:[6,13,21,27,34,42],bonus:[10],co:false,coAmt:null},
+  {round:2074,date:'2026/02/05',nums:[1,8,16,24,33,40],bonus:[19],co:true,coAmt:'1億2,400万円'},
+  {round:2073,date:'2026/02/02',nums:[5,12,20,26,35,41],bonus:[7],co:false,coAmt:null},
+  {round:2072,date:'2026/01/29',nums:[2,10,18,23,30,39],bonus:[14],co:true,coAmt:'2億900万円'},
+  {round:2071,date:'2026/01/26',nums:[4,11,19,28,36,43],bonus:[6],co:false,coAmt:null},
+  {round:2070,date:'2026/01/22',nums:[7,15,21,25,32,40],bonus:[9],co:false,coAmt:null},
+];
+var RECENT_DATA=FALLBACK_DATA.slice();
+var hotNums=[],coldNums=[];
+
+function updateOddEven(v){document.getElementById(‘oddEvenModeVal’).textContent=ODD_EVEN_LABELS[v];}
+
+function toggleSection(wrapId,arrowId){
+var wrap=document.getElementById(wrapId);
+var arrow=document.getElementById(arrowId);
+if(!wrap||!arrow)return;
+if(wrap.classList.contains(‘open’)){
+wrap.classList.remove(‘open’);
+arrow.style.transform=‘rotate(0deg)’;
+}else{
+wrap.classList.add(‘open’);
+arrow.style.transform=‘rotate(180deg)’;
+}
+}
+
+function updateSlider(id,valId,fmt){
+document.getElementById(valId).textContent=fmt(document.getElementById(id).value);
+}
+
+function renderCarryover(){
+var latest=RECENT_DATA[0];
+var bar=document.getElementById(‘coBar’);
+if(latest.co&&latest.coAmt){
+document.getElementById(‘coBarAmt’).textContent=latest.coAmt;
+bar.style.display=‘flex’;
+}else{
+bar.style.display=‘none’;
+}
+}
+
+function renderRecentResults(){
+var list=document.getElementById(‘resultsList’);
+list.innerHTML=’’;
+RECENT_DATA.slice(0,5).forEach(function(d,i){
+var card=document.createElement(‘div’);
+card.className=‘result-card’;
+var badges=’’;
+if(i===0)badges+=’<span class="badge-new">最新</span>’;
+if(d.co)badges+=’<span class="badge-co">CO</span>’;
+var balls=’’;
+d.nums.forEach(function(n){
+var cls=n<=21?‘low’:‘high’;
+balls+=’<div class="r-ball '+cls+'">’+String(n).padStart(2,‘0’)+’</div>’;
+});
+balls+=’<div class="r-ball bonus-label">B</div>’;
+d.bonus.forEach(function(n){
+balls+=’<div class="r-ball bonus">’+String(n).padStart(2,‘0’)+’</div>’;
+});
+card.innerHTML=’<div class="result-head"><div><div class="result-round">第’+d.round+‘回</div><div class="result-date">’+d.date+’</div></div><div class="result-badges">’+badges+’</div></div><div class="result-balls">’+balls+’</div>’;
+list.appendChild(card);
+});
+document.getElementById(‘statusText’).textContent=‘データ読み込み完了 - 第’+RECENT_DATA[0].round+‘回まで’;
+}
+
+function analyzeStats(){
+var data=RECENT_DATA.slice(0,20);
+var allNums=[];
+data.forEach(function(d){d.nums.forEach(function(n){allNums.push(n);});});
+var sums=data.map(function(d){return d.nums.reduce(function(a,b){return a+b;},0);});
+document.getElementById(‘avgSum’).textContent=Math.round(sums.reduce(function(a,b){return a+b;},0)/sums.length);
+var oddCount=allNums.filter(function(n){return n%2!==0;}).length;
+document.getElementById(‘oddRate’).textContent=Math.round(oddCount/allNums.length*100)+’%’;
+var lowCount=data.map(function(d){return d.nums.filter(function(n){return n<=21;}).length;});
+document.getElementById(‘avgLow’).textContent=(lowCount.reduce(function(a,b){return a+b;},0)/data.length).toFixed(1)+‘個’;
+var lp=Math.round(allNums.filter(function(n){return n<=21;}).length/allNums.length*100);
+document.getElementById(‘lowBar’).style.width=lp+’%’;
+document.getElementById(‘highBar’).style.width=(100-lp)+’%’;
+document.getElementById(‘lowPct’).textContent=lp+’%’;
+document.getElementById(‘highPct’).textContent=(100-lp)+’%’;
+var freq={};
+for(var i=1;i<=43;i++)freq[i]=0;
+allNums.forEach(function(n){freq[n]++;});
+var sorted=Object.entries(freq).sort(function(a,b){return b[1]-a[1];});
+hotNums=sorted.slice(0,10).filter(function(x){return x[1]>0;}).map(function(x){return {n:+x[0],cnt:x[1]};});
+coldNums=sorted.slice(-10).reverse().map(function(x){return {n:+x[0],cnt:x[1]};});
+var hotHTML=’’;
+hotNums.forEach(function(x){hotHTML+=’<div class="hc-num hot">’+String(x.n).padStart(2,‘0’)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
+document.getElementById(‘hotNums’).innerHTML=hotHTML;
+var coldHTML=’’;
+coldNums.forEach(function(x){coldHTML+=’<div class="hc-num cold">’+String(x.n).padStart(2,‘0’)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
+document.getElementById(‘coldNums’).innerHTML=coldHTML;
+}
+
+function generateNumbers(){
+var sets=parseInt(document.getElementById(‘setCount’).value);
+var target=parseInt(document.getElementById(‘targetSum’).value);
+var hotPrio=parseInt(document.getElementById(‘hotPriority’).value);
+var pullCount=parseInt(document.getElementById(‘pullCount’).value);
+var lowHighMode=parseInt(document.getElementById(‘lowHighMode’).value);
+var oddEvenMode=parseInt(document.getElementById(‘oddEvenMode’).value);
+document.getElementById(‘outputLabel’).style.display=‘flex’;
+document.getElementById(‘adAfterResult’).style.display=‘block’;
+var out=document.getElementById(‘outputSection’);
+out.innerHTML=’’;
+for(var s=0;s<sets;s++){
+var result=null;
+for(var attempt=0;attempt<1000;attempt++){
+result=tryGen(target,hotPrio,pullCount,lowHighMode,oddEvenMode);
+if(result)break;
+}
+if(!result)continue;
+renderOutput(result,s+1,out);
+}
+}
+
+function tryGen(target,hotPrio,pullCount,lowHighMode,oddEvenMode){
+var prevNums=RECENT_DATA[0].nums;
+var hotSet={};
+hotNums.forEach(function(x){hotSet[x.n]=true;});
+var lowTarget=[4,3,2][lowHighMode];
+var hiTarget=6-lowTarget;
+var tOdd=ODD_EVEN_VALS[oddEvenMode][0];
+var tEven=ODD_EVEN_VALS[oddEvenMode][1];
+var pullNums=[];
+if(pullCount>0){
+var cands=prevNums.slice().sort(function(){return Math.random()-0.5;});
+for(var i=0;i<cands.length&&pullNums.length<pullCount;i++)pullNums.push(cands[i]);
+}
+var fixed=pullNums.slice();
+var needLow=Math.max(0,lowTarget-fixed.filter(function(n){return n<=21;}).length);
+var needHigh=Math.max(0,hiTarget-fixed.filter(function(n){return n>=22;}).length);
+if(needLow+needHigh+fixed.length!==6)return null;
+var lowPool=[],highPool=[];
+for(var li=1;li<=21;li++){
+if(fixed.indexOf(li)>=0)continue;
+if(hotPrio===2&&hotSet[li]){lowPool.push(li);lowPool.push(li);}
+else if(hotPrio===0&&hotSet[li])continue;
+else lowPool.push(li);
+}
+for(var hi=22;hi<=43;hi++){
+if(fixed.indexOf(hi)>=0)continue;
+if(hotPrio===2&&hotSet[hi]){highPool.push(hi);highPool.push(hi);}
+else if(hotPrio===0&&hotSet[hi])continue;
+else highPool.push(hi);
+}
+lowPool.sort(function(){return Math.random()-0.5;});
+highPool.sort(function(){return Math.random()-0.5;});
+var lowUniq=[],highUniq=[];
+lowPool.forEach(function(n){if(lowUniq.indexOf(n)<0)lowUniq.push(n);});
+highPool.forEach(function(n){if(highUniq.indexOf(n)<0)highUniq.push(n);});
+var lowFill=lowUniq.slice(0,needLow);
+var highFill=highUniq.slice(0,needHigh);
+if(lowFill.length<needLow||highFill.length<needHigh)return null;
+var picks=fixed.concat(lowFill).concat(highFill);
+var unique={};
+picks.forEach(function(n){unique[n]=true;});
+if(Object.keys(unique).length!==6)return null;
+var odd=picks.filter(function(n){return n%2!==0;}).length;
+var even=picks.filter(function(n){return n%2===0;}).length;
+if(odd!==tOdd||even!==tEven){
+var excess=odd>tOdd?‘odd’:‘even’;
+var swapOut=picks.filter(function(n){return pullNums.indexOf(n)<0&&(excess===‘odd’?n%2!==0:n%2===0);});
+if(!swapOut.length)return null;
+var swapPool=lowPool.concat(highPool).filter(function(n){return picks.indexOf(n)<0&&(excess===‘odd’?n%2===0:n%2!==0);});
+if(!swapPool.length)return null;
+swapPool.sort(function(){return Math.random()-0.5;});
+var tgt=swapOut[Math.floor(Math.random()*swapOut.length)];
+picks[picks.indexOf(tgt)]=swapPool[0];
+var unique2={};
+picks.forEach(function(n){unique2[n]=true;});
+if(Object.keys(unique2).length!==6)return null;
+odd=picks.filter(function(n){return n%2!==0;}).length;
+even=picks.filter(function(n){return n%2===0;}).length;
+if(odd!==tOdd||even!==tEven)return null;
+}
+picks.sort(function(a,b){return a-b;});
+var sum=picks.reduce(function(a,b){return a+b;},0);
+if(sum<120||sum>150||Math.abs(sum-target)>15)return null;
+return picks.map(function(n){
+return {n:n,type:pullNums.indexOf(n)>=0?‘pull’:n<=21?‘low’:‘high’};
+});
+}
+
+function renderOutput(nums,setNo,container){
+var vals=nums.map(function(x){return x.n;});
+var sum=vals.reduce(function(a,b){return a+b;},0);
+var odd=vals.filter(function(n){return n%2!==0;}).length;
+var even=6-odd;
+var low=vals.filter(function(n){return n<=21;}).length;
+var high=vals.filter(function(n){return n>=22;}).length;
+var allOk=sum>=120&&sum<=150;
+var card=document.createElement(‘div’);
+card.className=‘output-card’;
+card.style.animationDelay=((setNo-1)*0.07)+‘s’;
+var balls=’’;
+nums.forEach(function(x){
+balls+=’<div class="out-ball '+x.type+'">’+String(x.n).padStart(2,‘0’)+’</div>’;
+});
+var hasPull=nums.some(function(x){return x.type===‘pull’;});
+var badges=hasPull?’<span class="badge pull-badge">引張</span>’:’’;
+card.innerHTML=’<div class="out-head"><div class="out-set">SET ‘+setNo+’ ‘+badges+’</div><div class="out-judge '+(allOk?'ok':'warn')+'">’+(allOk?‘◎ GOOD’:‘△ CHECK’)+’</div></div><div class="out-balls">’+balls+’</div><div class="out-info"><div class="out-chip">合計 <span>’+sum+’</span></div><div class="out-chip">奇偶 <span>’+odd+’:’+even+’</span></div><div class="out-chip">低/高 <span>’+low+’/’+high+’</span></div></div>’;
+container.appendChild(card);
+}
+
+window.onload=function(){
+updateSlider(‘setCount’,‘setCountVal’,function(v){return v+‘セット’;});
+updateSlider(‘targetSum’,‘targetSumVal’,function(v){return v;});
+updateSlider(‘hotPriority’,‘hotPriorityVal’,function(v){return [‘低’,‘中’,‘高’][v];});
+updateSlider(‘pullCount’,‘pullCountVal’,function(v){return v==0?‘なし’:v+‘個’;});
+updateSlider(‘lowHighMode’,‘lowHighModeVal’,function(v){return [‘低寄り(4/2)’,‘均等(3/3)’,‘高寄り(2/4)’][v];});
+updateOddEven(document.getElementById(‘oddEvenMode’).value);
+renderRecentResults();
+analyzeStats();
+renderCarryover();
+document.getElementById(‘recentToggle’).addEventListener(‘click’,function(){toggleSection(‘recentWrap’,‘recentArrow’);});
+document.getElementById(‘statsToggle’).addEventListener(‘click’,function(){toggleSection(‘statsWrap’,‘statsArrow’);});
+document.getElementById(‘genBtn’).addEventListener(‘click’,function(){generateNumbers();});
+};
+</script>
+
+</body>
+</html>
