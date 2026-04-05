@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja" style="background:#1a1508;">
 <head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-27ZFDTJYFC"></script>
@@ -209,23 +208,23 @@ var FALLBACK_DATA=[
   {round:664,date:'2026/02/13',nums:[3,6,8,14,21,22,31],bonus:[10,27],co:false,coAmt:null},
   {round:663,date:'2026/02/06',nums:[4,7,11,20,21,28,33],bonus:[15,32],co:true,coAmt:'2億8,000万円'},
   {round:662,date:'2026/01/30',nums:[5,14,16,21,24,29,35],bonus:[6,30],co:false,coAmt:null},
-  {round:661,date:'2026/01/23',nums:[7,12,17,22,31,34,35],bonus:[9,28],co:false,coAmt:null},
+  {round:661,date:'2026/01/23',nums:[7,12,17,22,31,34,35],bonus:[9,28],co:false,coAmt:null}
 ];
 var RECENT_DATA=FALLBACK_DATA.slice();
 var hotNums=[],coldNums=[];
 
-function updateOddEven(v){document.getElementById(‘oddEvenModeVal’).textContent=ODD_EVEN_LABELS[v];}
+function updateOddEven(v){document.getElementById('oddEvenModeVal').textContent=ODD_EVEN_LABELS[v];}
 
 function toggleSection(wrapId,arrowId){
 var wrap=document.getElementById(wrapId);
 var arrow=document.getElementById(arrowId);
 if(!wrap||!arrow)return;
-if(wrap.classList.contains(‘open’)){
-wrap.classList.remove(‘open’);
-arrow.style.transform=‘rotate(0deg)’;
+if(wrap.classList.contains('open')){
+wrap.classList.remove('open');
+arrow.style.transform='rotate(0deg)';
 }else{
-wrap.classList.add(‘open’);
-arrow.style.transform=‘rotate(180deg)’;
+wrap.classList.add('open');
+arrow.style.transform='rotate(180deg)';
 }
 }
 
@@ -235,35 +234,35 @@ document.getElementById(valId).textContent=fmt(document.getElementById(id).value
 
 function renderCarryover(){
 var latest=RECENT_DATA[0];
-var bar=document.getElementById(‘coBar’);
+var bar=document.getElementById('coBar');
 if(latest.co&&latest.coAmt){
-document.getElementById(‘coBarAmt’).textContent=latest.coAmt;
-bar.style.display=‘flex’;
+document.getElementById('coBarAmt').textContent=latest.coAmt;
+bar.style.display='flex';
 }else{
-bar.style.display=‘none’;
+bar.style.display='none';
 }
 }
 
 function renderRecentResults(){
-var list=document.getElementById(‘resultsList’);
-list.innerHTML=’’;
+var list=document.getElementById('resultsList');
+list.innerHTML='';
 RECENT_DATA.slice(0,5).forEach(function(d,i){
-var card=document.createElement(‘div’);
-card.className=‘result-card’;
-var badge=i===0?’<span class="result-badge-new">最新</span>’:’’;
-var balls=’’;
+var card=document.createElement('div');
+card.className='result-card';
+var badge=i===0?'<span class="result-badge-new">最新</span>':'';
+var balls='';
 d.nums.forEach(function(n){
-var cls=MULTIPLES.indexOf(n)>=0?‘mult’:‘normal’;
-balls+=’<div class="r-ball '+cls+'">’+String(n).padStart(2,‘0’)+’</div>’;
+var cls=MULTIPLES.indexOf(n)>=0?'mult':'normal';
+balls+='<div class="r-ball '+cls+'">'+String(n).padStart(2,'0')+'</div>';
 });
-balls+=’<div class="r-ball bonus-label">B</div>’;
+balls+='<div class="r-ball bonus-label">B</div>';
 d.bonus.forEach(function(n){
-balls+=’<div class="r-ball bonus">’+String(n).padStart(2,‘0’)+’</div>’;
+balls+='<div class="r-ball bonus">'+String(n).padStart(2,'0')+'</div>';
 });
-card.innerHTML=’<div class="result-head"><div><div class="result-round">第’+d.round+‘回</div><div class="result-date">’+d.date+’</div></div>’+badge+’</div><div class="result-balls">’+balls+’</div>’;
+card.innerHTML='<div class="result-head"><div><div class="result-round">第'+d.round+'回</div><div class="result-date">'+d.date+'</div></div>'+badge+'</div><div class="result-balls">'+balls+'</div>';
 list.appendChild(card);
 });
-document.getElementById(‘statusText’).textContent=‘データ読み込み完了 - 第’+RECENT_DATA[0].round+‘回まで’;
+document.getElementById('statusText').textContent='データ読み込み完了 - 第'+RECENT_DATA[0].round+'回まで';
 }
 
 function analyzeStats(){
@@ -272,38 +271,38 @@ var allNums=[];
 data.forEach(function(d){d.nums.forEach(function(n){allNums.push(n);});});
 var sums=data.map(function(d){return d.nums.reduce(function(a,b){return a+b;},0);});
 var avgSum=Math.round(sums.reduce(function(a,b){return a+b;},0)/sums.length);
-document.getElementById(‘avgSum’).textContent=avgSum;
+document.getElementById('avgSum').textContent=avgSum;
 var oddCount=allNums.filter(function(n){return n%2!==0;}).length;
-document.getElementById(‘oddRate’).textContent=Math.round(oddCount/allNums.length*100)+’%’;
+document.getElementById('oddRate').textContent=Math.round(oddCount/allNums.length*100)+'%';
 var multCount=allNums.filter(function(n){return MULTIPLES.indexOf(n)>=0;}).length;
-document.getElementById(‘multRate’).textContent=(multCount/data.length).toFixed(1);
+document.getElementById('multRate').textContent=(multCount/data.length).toFixed(1);
 var freq={};
 for(var i=1;i<=37;i++)freq[i]=0;
 allNums.forEach(function(n){freq[n]++;});
 var sorted=Object.entries(freq).sort(function(a,b){return b[1]-a[1];});
 hotNums=sorted.slice(0,10).filter(function(x){return x[1]>0;}).map(function(x){return {n:+x[0],cnt:x[1]};});
 coldNums=sorted.slice(-10).reverse().map(function(x){return {n:+x[0],cnt:x[1]};});
-var hotHTML=’’;
-hotNums.forEach(function(x){hotHTML+=’<div class="hc-num hot">’+String(x.n).padStart(2,‘0’)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
-document.getElementById(‘hotNums’).innerHTML=hotHTML;
-var coldHTML=’’;
-coldNums.forEach(function(x){coldHTML+=’<div class="hc-num cold">’+String(x.n).padStart(2,‘0’)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
-document.getElementById(‘coldNums’).innerHTML=coldHTML;
+var hotHTML='';
+hotNums.forEach(function(x){hotHTML+='<div class="hc-num hot">'+String(x.n).padStart(2,'0')+'<span class="cnt">'+x.cnt+'回</span></div>';});
+document.getElementById('hotNums').innerHTML=hotHTML;
+var coldHTML='';
+coldNums.forEach(function(x){coldHTML+='<div class="hc-num cold">'+String(x.n).padStart(2,'0')+'<span class="cnt">'+x.cnt+'回</span></div>';});
+document.getElementById('coldNums').innerHTML=coldHTML;
 }
 
 function generateNumbers(){
-var sets=parseInt(document.getElementById(‘setCount’).value);
-var target=parseInt(document.getElementById(‘targetSum’).value);
-var hotPrio=parseInt(document.getElementById(‘hotPriority’).value);
-var pullCount=parseInt(document.getElementById(‘pullCount’).value);
-var serialCount=parseInt(document.getElementById(‘serialCount’).value);
-var tailCount=parseInt(document.getElementById(‘tailCount’).value);
-var oddEvenMode=parseInt(document.getElementById(‘oddEvenMode’).value);
-var multMode=parseInt(document.getElementById(‘multMode’).value);
-document.getElementById(‘outputLabel’).style.display=‘flex’;
-document.getElementById(‘adAfterResult’).style.display=‘block’;
-var out=document.getElementById(‘outputSection’);
-out.innerHTML=’’;
+var sets=parseInt(document.getElementById('setCount').value);
+var target=parseInt(document.getElementById('targetSum').value);
+var hotPrio=parseInt(document.getElementById('hotPriority').value);
+var pullCount=parseInt(document.getElementById('pullCount').value);
+var serialCount=parseInt(document.getElementById('serialCount').value);
+var tailCount=parseInt(document.getElementById('tailCount').value);
+var oddEvenMode=parseInt(document.getElementById('oddEvenMode').value);
+var multMode=parseInt(document.getElementById('multMode').value);
+document.getElementById('outputLabel').style.display='flex';
+document.getElementById('adAfterResult').style.display='block';
+var out=document.getElementById('outputSection');
+out.innerHTML='';
 for(var s=0;s<sets;s++){
 var result=null;
 for(var attempt=0;attempt<1000;attempt++){
@@ -400,11 +399,11 @@ var tailPairs=Object.values(tailGroups).filter(function(v){return v>=2;}).length
 if(tailCount>0&&tailPairs===0)return null;
 if(tailPairs>tailCount+1)return null;
 return picks.map(function(n){
-var type=‘normal’;
-if(mults.indexOf(n)>=0)type=‘mult’;
-else if(n===bridge)type=‘bridge’;
-else if(pullNums.indexOf(n)>=0)type=‘pull’;
-else if(serialNums.indexOf(n)>=0)type=‘serial’;
+var type='normal';
+if(mults.indexOf(n)>=0)type='mult';
+else if(n===bridge)type='bridge';
+else if(pullNums.indexOf(n)>=0)type='pull';
+else if(serialNums.indexOf(n)>=0)type='serial';
 return {n:n,type:type,hot:!!hotSet[n]};
 });
 }
@@ -418,45 +417,43 @@ var low=vals.filter(function(n){return n<=14;}).length;
 var mid=vals.filter(function(n){return n>=15&&n<=28;}).length;
 var high=vals.filter(function(n){return n>=29;}).length;
 var allOk=(odd===3&&even===4||odd===4&&even===3)&&sum>=110&&sum<=150&&low<=4&&high<=3&&mid>=1;
-var card=document.createElement(‘div’);
-card.className=‘output-card’;
-card.style.animationDelay=((setNo-1)*0.07)+‘s’;
-var balls=’’;
+var card=document.createElement('div');
+card.className='output-card';
+card.style.animationDelay=((setNo-1)*0.07)+'s';
+var balls='';
 nums.forEach(function(x){
-var cls=‘out-ball ‘+x.type;
-if(x.type===‘mult’&&x.hot)cls=‘out-ball mult’;
-balls+=’<div class="'+cls+'">’+String(x.n).padStart(2,‘0’)+’</div>’;
+var cls='out-ball '+x.type;
+balls+='<div class="'+cls+'">'+String(x.n).padStart(2,'0')+'</div>';
 });
-var hasPull=nums.some(function(x){return x.type===‘pull’;});
-var hasSerial=nums.some(function(x){return x.type===‘serial’||x.type===‘bridge’;});
+var hasPull=nums.some(function(x){return x.type==='pull';});
+var hasSerial=nums.some(function(x){return x.type==='serial'||x.type==='bridge';});
 var tailGroups={};
 vals.forEach(function(n){var t=n%10;tailGroups[t]=(tailGroups[t]||0)+1;});
 var tailPairs=Object.values(tailGroups).filter(function(v){return v>=2;}).length;
-var badges=’’;
-if(hasPull)badges+=’<span class="badge pull-badge">引張</span>’;
-if(hasSerial)badges+=’<span class="badge serial-badge">連番</span>’;
-if(tailPairs)badges+=’<span class="badge tail-badge">末尾x’+tailPairs+’</span>’;
-card.innerHTML=’<div class="out-head"><div class="out-set">SET ‘+setNo+’ ‘+badges+’</div><div class="out-judge '+(allOk?'ok':'warn')+'">’+(allOk?‘◎ GOOD’:‘△ CHECK’)+’</div></div><div class="out-balls">’+balls+’</div><div class="out-info"><div class="out-chip">合計 <span>’+sum+’</span></div><div class="out-chip">奇偶 <span>’+odd+’:’+even+’</span></div><div class="out-chip">低/中/高 <span>’+low+’/’+mid+’/’+high+’</span></div></div>’;
+var badges='';
+if(hasPull)badges+='<span class="badge pull-badge">引張</span>';
+if(hasSerial)badges+='<span class="badge serial-badge">連番</span>';
+if(tailPairs)badges+='<span class="badge tail-badge">末尾x'+tailPairs+'</span>';
+card.innerHTML='<div class="out-head"><div class="out-set">SET '+setNo+' '+badges+'</div><div class="out-judge '+(allOk?'ok':'warn')+'">'+(allOk?'◎ GOOD':'△ CHECK')+'</div></div><div class="out-balls">'+balls+'</div><div class="out-info"><div class="out-chip">合計 <span>'+sum+'</span></div><div class="out-chip">奇偶 <span>'+odd+':'+even+'</span></div><div class="out-chip">低/中/高 <span>'+low+'/'+mid+'/'+high+'</span></div></div>';
 container.appendChild(card);
 }
 
 window.onload=function(){
-updateSlider(‘setCount’,‘setCountVal’,function(v){return v+‘セット’;});
-updateSlider(‘targetSum’,‘targetSumVal’,function(v){return v;});
-updateSlider(‘hotPriority’,‘hotPriorityVal’,function(v){return [‘低’,‘中’,‘高’][v];});
-updateSlider(‘pullCount’,‘pullCountVal’,function(v){return v==0?‘なし’:v+‘個’;});
-updateSlider(‘serialCount’,‘serialCountVal’,function(v){return v==0?‘なし’:v+‘組’;});
-updateSlider(‘tailCount’,‘tailCountVal’,function(v){return v==0?‘なし’:v+‘組’;});
-updateSlider(‘multMode’,‘multModeVal’,function(v){return [‘使わない’,‘2個(通常)’,‘3個’][v];});
-updateOddEven(document.getElementById(‘oddEvenMode’).value);
+updateSlider('setCount','setCountVal',function(v){return v+'セット';});
+updateSlider('targetSum','targetSumVal',function(v){return v;});
+updateSlider('hotPriority','hotPriorityVal',function(v){return ['低','中','高'][v];});
+updateSlider('pullCount','pullCountVal',function(v){return v==0?'なし':v+'個';});
+updateSlider('serialCount','serialCountVal',function(v){return v==0?'なし':v+'組';});
+updateSlider('tailCount','tailCountVal',function(v){return v==0?'なし':v+'組';});
+updateSlider('multMode','multModeVal',function(v){return ['使わない','2個(通常)','3個'][v];});
+updateOddEven(document.getElementById('oddEvenMode').value);
 renderRecentResults();
 analyzeStats();
 renderCarryover();
-document.getElementById(‘recentToggle’).addEventListener(‘click’,function(){toggleSection(‘recentWrap’,‘recentArrow’);});
-document.getElementById(‘statsToggle’).addEventListener(‘click’,function(){toggleSection(‘statsWrap’,‘statsArrow’);});
-document.getElementById(‘genBtn’).addEventListener(‘click’,function(){generateNumbers();});
+document.getElementById('recentToggle').addEventListener('click',function(){toggleSection('recentWrap','recentArrow');});
+document.getElementById('statsToggle').addEventListener('click',function(){toggleSection('statsWrap','statsArrow');});
+document.getElementById('genBtn').addEventListener('click',function(){generateNumbers();});
 };
 </script>
-
 </body>
 </html>
