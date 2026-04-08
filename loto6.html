@@ -191,6 +191,7 @@ footer{position:relative;z-index:1;padding:32px 16px 40px;font-size:0.82rem;colo
   <div class="footer-copy">※ 当選を保証するものではありません。楽しみの範囲でご利用ください。<br>© 2026 LOTO LAB</div>
 </footer>
 <script>
+function pad2(n){var s=String(n);return s.length<2?"0"+s:s;}
 var ODD_EVEN_LABELS=['奇2偶4','奇3偶3','奇4偶2','奇5偶1','奇1偶5'];
 var ODD_EVEN_VALS=[[2,4],[3,3],[4,2],[5,1],[1,5]];
 var FALLBACK_DATA=[
@@ -260,11 +261,11 @@ if(d.co)badges+=’<span class="badge-co">CO</span>’;
 var balls=’’;
 d.nums.forEach(function(n){
 var cls=n<=21?‘low’:‘high’;
-balls+=’<div class="r-ball '+cls+'">’+String(n).padStart(2,‘0’)+’</div>’;
+balls+=’<div class="r-ball '+cls+'">’+pad2(n)+’</div>’;
 });
 balls+=’<div class="r-ball bonus-label">B</div>’;
 d.bonus.forEach(function(n){
-balls+=’<div class="r-ball bonus">’+String(n).padStart(2,‘0’)+’</div>’;
+balls+=’<div class="r-ball bonus">’+pad2(n)+’</div>’;
 });
 card.innerHTML=’<div class="result-head"><div><div class="result-round">第’+d.round+‘回</div><div class="result-date">’+d.date+’</div></div><div class="result-badges">’+badges+’</div></div><div class="result-balls">’+balls+’</div>’;
 list.appendChild(card);
@@ -296,10 +297,10 @@ var sorted=[];for(var si2=0;si2<sortedKeys.length;si2++){sorted.push([sortedKeys
 hotNums=sorted.slice(0,10).filter(function(x){return x[1]>0;}).map(function(x){return {n:+x[0],cnt:x[1]};});
 coldNums=sorted.slice(-10).reverse().map(function(x){return {n:+x[0],cnt:x[1]};});
 var hotHTML=’’;
-hotNums.forEach(function(x){hotHTML+=’<div class="hc-num hot">’+String(x.n).padStart(2,‘0’)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
+hotNums.forEach(function(x){hotHTML+=’<div class="hc-num hot">’+pad2(x.n)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
 document.getElementById(‘hotNums’).innerHTML=hotHTML;
 var coldHTML=’’;
-coldNums.forEach(function(x){coldHTML+=’<div class="hc-num cold">’+String(x.n).padStart(2,‘0’)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
+coldNums.forEach(function(x){coldHTML+=’<div class="hc-num cold">’+pad2(x.n)+’<span class="cnt">’+x.cnt+‘回</span></div>’;});
 document.getElementById(‘coldNums’).innerHTML=coldHTML;
 }
 
@@ -406,7 +407,7 @@ card.className=‘output-card’;
 card.style.animationDelay=((setNo-1)*0.07)+‘s’;
 var balls=’’;
 nums.forEach(function(x){
-balls+=’<div class="out-ball '+x.type+'">’+String(x.n).padStart(2,‘0’)+’</div>’;
+balls+=’<div class="out-ball '+x.type+'">’+pad2(x.n)+’</div>’;
 });
 var hasPull=nums.some(function(x){return x.type===‘pull’;});
 var badges=hasPull?’<span class="badge pull-badge">引張</span>’:’’;
